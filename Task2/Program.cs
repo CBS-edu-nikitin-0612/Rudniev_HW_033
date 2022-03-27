@@ -14,24 +14,23 @@ namespace Task2
             Console.Write("Input url address: ");
             string urlAddress = Console.ReadLine();
             string htmlCode = GetCode(urlAddress);
-            string[] htmlCodeElements = htmlCode.Split(" ");
 
             List<string> mailElements = new List<string>(0);
             string pattern = @"^[0-9a-z_-]+@[\w]+\.\w{2,4}$";
             var regex = new Regex(pattern);
-            foreach (var item in htmlCodeElements)
+            MatchCollection matches = regex.Matches(htmlCode);
+            foreach (Match item in matches)
             {
-                if (regex.IsMatch(item))
-                    mailElements.Add(item);
+                mailElements.Add(item.Value);
             }
 
             List<string> phoneNumberElements = new List<string>(0);
-            pattern = @"^[+\d-]{10, 20}$";
+            pattern = @"[+\d-]{10, 20}";
             regex = new Regex(pattern);
-            foreach (var item in htmlCodeElements)
+            matches = regex.Matches(htmlCode);
+            foreach (Match item in matches)
             {
-                if (regex.IsMatch(item))
-                    phoneNumberElements.Add(item);
+                mailElements.Add(item.Value);
             }
 
             List<string> linkElements = new List<string>(0);
@@ -43,7 +42,7 @@ namespace Task2
             }
 
             var fileInfo = new FileInfo("result.txt");
-            using (var fileStream = File.Open(fileInfo.FullName, FileMode.Append))
+            using (var fileStream = File.Open(fileInfo.FullName, FileMode.OpenOrCreate))
             {
                 var streamWriter = new StreamWriter(fileStream);
 

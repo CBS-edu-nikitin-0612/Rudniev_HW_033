@@ -15,9 +15,9 @@ namespace Task2
             Console.Write("Input url address: ");
             string urlAddress = Console.ReadLine();
             string htmlCode = GetCode(urlAddress);
-
+            
             List<string> mailElements = new List<string>(0);
-            string pattern = @"^[0-9a-z_-]+@[\w]+\.\w{2,4}$";
+            string pattern = @"[0-9a-z_-]+@[\w]+\.\w{2,4}";
             var regex = new Regex(pattern);
             MatchCollection matches = regex.Matches(htmlCode);
             foreach (Match item in matches)
